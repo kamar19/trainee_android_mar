@@ -1,5 +1,11 @@
 package parking
 
-class Parking {
-    var plases: ArrayList<Place> = ArrayList(20)
+object Parking {
+    val plases: MutableList<Place> = arrayListOf()
+    fun initPlases() {
+        for (i in 0..19) {
+            plases.add(Place())
+        }
+    }
+
 }

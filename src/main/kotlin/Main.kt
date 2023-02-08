@@ -1,28 +1,60 @@
+import manage.InputerImp
+import parking.Parking
+import manage.ParkingManagerImp
+
+
 fun main(args: Array<String>) {
     var isEnd = false
+    Parking.initPlases()
+    val parkingManager1 = ParkingManagerImp(Parking.plases)
+    val inputer = InputerImp(parkingManager1)
+    parkingManager1.setSomeValues()
     do {
         val currentCommand: String? = readlnOrNull()
         when (currentCommand) {
             Command.START.value -> {
-                println("Привет! Рад вас видеть!!!")
+                parkingManager1.printInfo.printHi()
             }
 
             Command.END.value -> {
-                println("До свидания!")
+                parkingManager1.printInfo.printBye()
                 isEnd = true
             }
 
             Command.HELP.value -> {
-                println("Доступные команды:")
-                println("/start - Выводит приветствие")
-                println("/end - Выход из программы")
-                println("/help - Выводит информацию о доступных командах")
+                parkingManager1.printInfo.printHelp()
+            }
+
+            Command.RETURN.value -> {
+                parkingManager1.printInfo.printStr(inputer.inputNameOwner())
+            }
+
+            Command.PARK_INFO_BY_CAR.value -> {
+                parkingManager1.printInfo.printStr(inputer.inputCarNumer())
+            }
+
+            Command.PARK_INFO_BY_PLACE.value -> {
+                parkingManager1.printInfo.printStr(inputer.inputNumberParkPlace())
+            }
+
+            Command.PARK.value -> {
+                if (parkingManager1.getFreeCount() > 0) {
+                    parkingManager1.printInfo.printStr(inputer.inputInfoForParking())
+                }
+            }
+
+            Command.PARK_STATS.value -> {
+                parkingManager1.printInfo.printParkStats()
+            }
+
+            Command.PARK_ALL_STATS.value -> {
+                parkingManager1.printInfo.printParkAllStats()
             }
 
             else -> {
-                println("Программа не может обработать запрос. Для получения сведений о доступных командах введите команду /help")
+                parkingManager1.printInfo.printUnknownCommand()
             }
         }
-
     } while (!isEnd)
+
 }
