@@ -1,9 +1,13 @@
 package parking
 
-import java.util.*
-import kotlin.collections.ArrayList
+import Car
 
-class Place {
-    var isFree: Boolean = false
-    lateinit var storis: ArrayList<Storie>
+class Place(var isFree: Boolean = true, var car: Car? = null, var countPark: Int = 0) {
+    fun getIsFree(): String =
+        when (isFree) {
+            true -> "cвободно"
+            false -> "занято"
+        }
+
 }
+
